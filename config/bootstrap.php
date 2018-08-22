@@ -222,3 +222,8 @@ Type::build('timestamp')
 if (Configure::read('debug')) {
     Plugin::load('DebugKit', ['bootstrap' => true]);
 }
+<<<<<<< HEAD
+=======
+
+Plugin::load('BootstrapUI');
+>>>>>>> 4c4c1c1ca7e37db5cd639273e82e862e68275ae0

@@ -36,5 +36,12 @@ class AppView extends View
      */
     public function initialize()
     {
+<<<<<<< HEAD
+=======
+    	$this->loadHelper('Html',['className'=>'BootstrapUI.Html']);
+    	$this->loadHelper('Form',['className'=>'BootstrapUI.Form']);
+    	$this->loadHelper('Flash',['className'=>'BootstrapUI.Flash']);
+    	$this->loadHelper('Paginator',['className'=>'BootstrapUI.Paginator']);
+>>>>>>> 4c4c1c1ca7e37db5cd639273e82e862e68275ae0
     }
 }

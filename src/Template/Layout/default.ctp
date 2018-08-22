@@ -15,7 +15,6 @@
  */
 
 $cakeDescription = 'CakePHP: the rapid development php framework';
-=======
 	//独自のCSS
 	$this->prepend('css',$this->Html->css([
 		'style.css'
@@ -35,51 +34,12 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 	$this->prepend('script',$this->Html->script([
 		'//code.jquery.com/jquery-2.2.4.js'
 	]));
-	
->>>>>>> 4c4c1c1ca7e37db5cd639273e82e862e68275ae0
+
+
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
-    <?= $this->Html->charset() ?>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?= $cakeDescription ?>:
-        <?= $this->fetch('title') ?>
-    </title>
-    <?= $this->Html->meta('icon') ?>
-
-    <?= $this->Html->css('base.css') ?>
-    <?= $this->Html->css('cake.css') ?>
-
-    <?= $this->fetch('meta') ?>
-    <?= $this->fetch('css') ?>
-    <?= $this->fetch('script') ?>
-</head>
-<body>
-    <nav class="top-bar expanded" data-topbar role="navigation">
-        <ul class="title-area large-3 medium-4 columns">
-            <li class="name">
-                <h1><a href=""><?= $this->fetch('title') ?></a></h1>
-            </li>
-        </ul>
-        <div class="top-bar-section">
-            <ul class="right">
-                <li><a target="_blank" href="http://book.cakephp.org/3.0/">Documentation</a></li>
-                <li><a target="_blank" href="http://api.cakephp.org/3.0/">API</a></li>
-            </ul>
-        </div>
-    </nav>
-    <?= $this->Flash->render() ?>
-    <div class="container clearfix">
-        <?= $this->fetch('content') ?>
-    </div>
-    <footer>
-    </footer>
-</body>
-</html>
-=======
 	<?=$this->Html->charset() ?>
 	<?=$this->Html->meta('icon') ?>
 	<?=$this->fetch('script') ?>
@@ -89,6 +49,7 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 <body>
 	<?=$this->element("menu/".$menu) ?>
 	<?=$this->element('content') ?>
+	<?=$this->fetch('script')?>
 </body>
 </html>
->>>>>>> 4c4c1c1ca7e37db5cd639273e82e862e68275ae0
+S

@@ -31,9 +31,8 @@
 	<?=$this->fetch('css') ?>
 </head>
 <body>
-	<?=$this->element("menu/".$menu) ?>
+	<?=$this->element("menu/default". $menu) ?>
 	<?=$this->element('content') ?>
 	<?=$this->fetch('script')?>
 </body>
 </html>
-S

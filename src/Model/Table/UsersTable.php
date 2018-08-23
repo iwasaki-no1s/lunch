@@ -41,9 +41,10 @@ class UsersTable extends Table
         $validator
             ->requirePresence('password','create')
             ->notEmpty('password');
-        $validator
+        //駅機能作ってないのでとりあえずコメントアウト
+        /*$validator
             ->requirePresence('station_id','create')
-            ->notEmpty('station_id');
+            ->notEmpty('station_id');*/
         return $validator;
     }
 

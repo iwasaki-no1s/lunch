@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users(
 	id int(11) not null auto_increment,
 	name varchar(255) not null,
-	station_id int(11) not null,
+	station_id int(11) ,
+	password varchar(255) not null,
 	PRIMARY KEY (id)
 );
 

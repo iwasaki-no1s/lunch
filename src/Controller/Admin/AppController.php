@@ -12,7 +12,7 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
@@ -25,7 +25,7 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class UsersController extends Controller
+class AppController extends Controller
 {
 
     /**
@@ -41,9 +41,9 @@ class UsersController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent("MyAuth");
-        $this->MyAuth->allow(["login","register"]);
-
+        $this->loadComponent('RequestHandler');
+        $this->loadComponent('Flash');
+        $this->loadComponent('MyAuth');
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -53,39 +53,31 @@ class UsersController extends Controller
         //$this->loadComponent('Csrf');
     }
 
-    public function login()
+    /**
+     * Before render callback.
+     *
+     * @param \Cake\Event\Event $event The beforeRender event.
+     * @return \Cake\Network\Response|null|void
+     */
+    public function beforeFilter(Event $event)
     {
-        $user = $this->Users->newEntity();
-        if($this->request->is('post')){
-            //IDとパスワードのチェック
-            $user = $this->MyAuth->identify();
-            if($user){
-                //正当なユーザーなのでセッションに代入
-                $this->MyAuth->setUser($user);
-
-                return $this->redirect($this->MyAuth->redirectUrl());
-            }else{
-                $this->Falsh->error(__('ID、またはパスワードが間違っています'));
-            }
+        parent::beforeFilter($event);
+        //認証している場合は、メニューを「admin」用にする
+        $user = $this->MyAuth->user();
+        $menu = "default";
+        if ($user){
+            //viewに認証済みのユーザー情報を渡す
+            $this->set("auth",$user);
+            $menu = "admin";
         }
-        $this->set(compact('user'));
+        $this->set("menu",$menu);
     }
 
-    public function register()
+    public function isAuthorized($user = null)
     {
-        $user = $this->Users->newEntity();
-        if($this->request->is('post')){
-            //リクエストデータに基づく新規ユーザー作成
-            $user = $this->Users->patchEntity($user,$this->request->data);
-            if($this->Users->save($user)){
-                $this->MyAuth->setUser($user);
-                $this->Flash->success("ユーザー登録が完了しました");
-
-                return $this->redirect($this->MyAuth->redirectUrl());
-            }
-            $this->Flash->error(__('ユーザー登録に失敗しました'));
+        if($user !== null){
+            return true;
         }
-        //画面表示
-        $this->set(compact('user'));
+        return false;
     }
 }

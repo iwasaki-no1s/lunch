@@ -60,10 +60,18 @@ class AppController extends Controller
      */
     public function beforeRender(Event $event)
     {
+        //認証前のメニューのファイル名
+        $this->set("menu","default");
         if (!array_key_exists('_serialize', $this->viewVars) &&
             in_array($this->response->type(), ['application/json', 'application/xml'])
         ) {
             $this->set('_serialize', true);
         }
+    }
+
+    public function isAuthorized($user = null)
+    {
+        //ここでは常にfalseを返して認証させない
+        return false;
     }
 }

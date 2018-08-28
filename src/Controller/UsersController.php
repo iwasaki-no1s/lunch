@@ -26,7 +26,7 @@ use Cake\Log\Log;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class UsersController extends Controller
+class UsersController extends AppController
 {
 
     /**

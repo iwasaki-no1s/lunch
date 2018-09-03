@@ -12,15 +12,15 @@ class UsersTable extends Table
     {
         parent::initialize($config);
         $this->table('users');
-        $this->displayField('id');
+        $this->displayField('name');
         $this->primaryKey('id');
         $this->addBehavior('Timestamp');
 
-        $this->hasMany('comments',[
+        $this->hasMany('Comments',[
             'foreignKey' => 'user_id'
         ]);
 
-        $this->belongsTo('station',[
+        $this->belongsTo('Station',[
             'foreignKey' => 'station_id',
             'joinType' => 'INNER'
         ]);

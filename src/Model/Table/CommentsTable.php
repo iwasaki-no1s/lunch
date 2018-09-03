@@ -6,24 +6,30 @@ use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
-class StationsTable extends Table
+class CommentsTable extends Table
 {
     public function initialize(array $config)
     {
         parent::initialize($config);
         
-        $this->table('stations');
-        $this->displayField('name');
+        $this->table('comments');
+        $this->displayField('comment');
         $this->primaryKey('id');
         
         $this->addBehavior('Timestamp');
         
-        $this->hasMany('Users',[
-            'foreignkey' => 'station_id'
+        $this->belongsTo('Users',[
+            'foreignKey' => 'user_id',
+            'joinType' => 'INNER'
         ]);
         
-        $this->hasMany('Stores',[
-            'foreignkey' => 'station_id'
+        $this->belongsTo('Stores',[
+            'foreignKey' => 'store_id',
+            'joinType' => 'INNER'
+        ]);
+        
+        $this->hasMany('Images',[
+            'foreignkey' => 'comment_id'
         ]);
     }
     

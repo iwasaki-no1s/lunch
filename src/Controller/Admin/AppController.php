@@ -12,7 +12,7 @@
  * @since     0.2.9
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  */
-namespace App\Controller;
+namespace App\Controller\Admin;
 
 use Cake\Controller\Controller;
 use Cake\Event\Event;
@@ -59,20 +59,25 @@ class AppController extends Controller
      * @param \Cake\Event\Event $event The beforeRender event.
      * @return \Cake\Network\Response|null|void
      */
-    public function beforeRender(Event $event)
+    public function beforeFilter(Event $event)
     {
-        //認証前のメニューのファイル名
-        $this->set("menu","default");
-        if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
-        ) {
-            $this->set('_serialize', true);
+        parent::beforeFilter($event);
+        //認証している場合は、メニューを「admin」用にする
+        $user = $this->MyAuth->user();
+        $menu = "default";
+        if ($user){
+            //viewに認証済みのユーザー情報を渡す
+            $this->set("auth",$user);
+            $menu = "admin";
         }
+        $this->set("menu",$menu);
     }
 
     public function isAuthorized($user = null)
     {
-        //ここでは常にfalseを返して認証させない
+        if($user !== null){
+            return true;
+        }
         return false;
     }
 }

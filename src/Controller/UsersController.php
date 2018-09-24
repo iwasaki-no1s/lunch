@@ -14,8 +14,9 @@
  */
 namespace App\Controller;
 
-use Cake\Controller\Controller;
+use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Log\Log;
 
 /**
  * Application Controller
@@ -25,7 +26,7 @@ use Cake\Event\Event;
  *
  * @link http://book.cakephp.org/3.0/en/controllers.html#the-app-controller
  */
-class AppController extends Controller
+class UsersController extends AppController
 {
 
     /**
@@ -41,9 +42,9 @@ class AppController extends Controller
     {
         parent::initialize();
 
-        $this->loadComponent('RequestHandler');
-        $this->loadComponent('Flash');
-        $this->loadComponent('MyAuth');
+        $this->loadComponent("MyAuth");
+        $this->MyAuth->allow(["login","register"]);
+
 
         /*
          * Enable the following components for recommended CakePHP security settings.
@@ -53,26 +54,39 @@ class AppController extends Controller
         //$this->loadComponent('Csrf');
     }
 
-    /**
-     * Before render callback.
-     *
-     * @param \Cake\Event\Event $event The beforeRender event.
-     * @return \Cake\Network\Response|null|void
-     */
-    public function beforeRender(Event $event)
+    public function login()
     {
-        //認証前のメニューのファイル名
-        $this->set("menu","default");
-        if (!array_key_exists('_serialize', $this->viewVars) &&
-            in_array($this->response->type(), ['application/json', 'application/xml'])
-        ) {
-            $this->set('_serialize', true);
+        $user = $this->Users->newEntity();
+        if($this->request->is('post')){
+            //IDとパスワードのチェック
+            $user = $this->MyAuth->identify();
+            if($user){
+                //正当なユーザーなのでセッションに代入
+                $this->MyAuth->setUser($user);
+
+                return $this->redirect($this->MyAuth->redirectUrl());
+            }else{
+                $this->Falsh->error(__('ID、またはパスワードが間違っています'));
+            }
         }
+        $this->set(compact('user'));
     }
 
-    public function isAuthorized($user = null)
+    public function register()
     {
-        //ここでは常にfalseを返して認証させない
-        return false;
+        $user = $this->Users->newEntity();
+        if($this->request->is('post')){
+            //リクエストデータに基づく新規ユーザー作成
+            $user = $this->Users->patchEntity($user,$this->request->data);
+            if($this->Users->save($user)){
+                $this->MyAuth->setUser($user);
+                $this->Flash->success("ユーザー登録が完了しました");
+
+                return $this->redirect($this->MyAuth->redirectUrl());
+            }
+            $this->Flash->error(__('ユーザー登録に失敗しました'));
+        }
+        //画面表示
+        $this->set(compact('user'));
     }
 }

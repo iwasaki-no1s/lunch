@@ -25,11 +25,11 @@ CREATE TABLE stores(
 DROP TABLE IF EXISTS comments;
 CREATE TABLE comments(
 	id int(11) not null auto_increment,
-	user_id int(11) not null,
 	store_id int(11) not null,
 	comment text default null,
 	comment_id int(11),
 	created_at datetime default null,
+        user_id int(11) not null,
 	PRIMARY KEY (id)
 );
 
@@ -45,15 +45,6 @@ CREATE TABLE images(
 	id int(11) not null auto_increment,
 	comment_id int(11) not null,
 	image_url varchar(255) not null,
-	PRIMARY KEY (id)
-);
-
-DROP TABLE IF EXISTS stations_users;
-CREATE TABLE stations_users(
-	id int(11) not null auto_increment,
-	station_id int(11) not null,
-	user_id int(11) not null,
-        flg int(1) default 0,
 	PRIMARY KEY (id)
 );
 

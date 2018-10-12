@@ -3,7 +3,7 @@
         <script type="text/javascript">
             function admin() {
                 var role = document.getElementById("role");
-                console.log(role.value);
+                console.log(role);
                 if (role.value === "1"){
                     var pass = prompt("管理者パスワード", "");
                     if (pass === "admin"){

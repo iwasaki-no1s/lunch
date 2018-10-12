@@ -30,7 +30,7 @@
 	<?=$this->fetch('css') ?>
 </head>
 <body>
-	<?=$this->element("menu/".$menu) ?>
+	<?=$this->element('menu') ?>
 	<?=$this->element('content') ?>
 </body>
 </html>

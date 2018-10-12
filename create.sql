@@ -9,7 +9,8 @@ DROP TABLE IF EXISTS users;
 CREATE TABLE users(
 	id int(11) not null auto_increment,
 	name varchar(255) not null,
-	station_id int(11) not null,
+	password varchar(255) not null,
+	role varchar(8) default 'user',
 	PRIMARY KEY (id)
 );
 
@@ -18,7 +19,6 @@ CREATE TABLE stores(
 	id int(11) not null auto_increment,
 	name varchar(255) not null,
 	address varchar(255) default null,
-	station_id int(11) not null,
 	PRIMARY KEY (id)
 );
 
@@ -28,6 +28,7 @@ CREATE TABLE comments(
 	user_id int(11) not null,
 	store_id int(11) not null,
 	comment text default null,
+	comment_id int(11),
 	created_at datetime default null,
 	PRIMARY KEY (id)
 );
@@ -45,4 +46,19 @@ CREATE TABLE images(
 	comment_id int(11) not null,
 	image_url varchar(255) not null,
 	PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS stations_users;
+CREATE TABLE stations_users(
+	id int(11) not null auto_increment,
+	station_id int(11) not null,
+	user_id int(11) not null,
+        flg int(1) default 0,
+	PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS stations_stores;
+CREATE TABLE stations_stores(
+	station_id int(11) not null,
+	stores_id int(11) not null
 );
